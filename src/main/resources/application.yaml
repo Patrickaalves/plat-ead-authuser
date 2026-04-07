@@ -1,3 +1,6 @@
 spring:
   application:
     name: authuser
+
+server:
+  port: 8087
