@@ -1,6 +1,19 @@
+server:
+  port: 8087
+
 spring:
   application:
     name: authuser
-
-server:
-  port: 8087
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ead-authuser
+    username: postgres
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: update
+      jdbc:
+        lob.non_contextual_creation: true
+    properties:
+      hibernate:
+        format_sql: true
+        show-sql: true
