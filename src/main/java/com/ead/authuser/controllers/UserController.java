@@ -53,4 +53,26 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).body(userModelUpdate);
     }
+
+    @PutMapping("/{userId}/password")
+    public ResponseEntity<Object> updatePassword(@PathVariable(value = "userId") UUID userId,
+                                             @RequestBody @JsonView(UserRecordDto.UserView.PasswordPut.class) UserRecordDto userRecordDto) {
+        Optional<UserModel> userModelOptional = userService.findById(userId);
+
+        if (!userModelOptional.get().getPassword().equals(userRecordDto.oldPassword())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Mismatched old password");
+        }
+
+        userService.updateUserPassword(userRecordDto, userService.findById(userId).get());
+
+        return ResponseEntity.status(HttpStatus.OK).body("Password updated successfully");
+    }
+
+    @PutMapping("/{userId}/image")
+    public ResponseEntity<Object> updateImage(@PathVariable(value = "userId") UUID userId,
+                                             @RequestBody @JsonView(UserRecordDto.UserView.ImagePut.class) UserRecordDto userRecordDto) {
+        UserModel userModelUpdate = userService.updateImage(userRecordDto, userService.findById(userId).get());
+
+        return ResponseEntity.status(HttpStatus.OK).body(userModelUpdate);
+    }
 }
