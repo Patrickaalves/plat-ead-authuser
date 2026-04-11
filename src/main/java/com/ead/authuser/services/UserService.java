@@ -19,4 +19,6 @@ public interface UserService {
     boolean existsByUserName(String username);
 
     boolean existsByEmail(String email);
+
+    UserModel updateUser(UserRecordDto userRecordDto, UserModel userModel);
 }
